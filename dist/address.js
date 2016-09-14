@@ -1,12 +1,12 @@
 /***
- * @auth Gaoshi
+ * @auth topoadmin
  * 插件名称: 中国省市信息联动插件
  * options 参数说明
  * ------------------
  * @param prov				默认省份
  * @param city				默认城市
  * @param district			默认区/县
- * @param scrollToCenter	true 已选位置滚动到中央   / false 默认为顶部
+ * @param scrollToCenter	true:已选位置滚动到中央 ,默认为顶部
  * @param autoOpen			自动打开
  * @param selectEnd			插件选择完毕回调事件 return {prov,city,district,zip}
  * @param customOutput		自定义选择完毕输出，不执行内部填充函数
@@ -32,13 +32,6 @@
 		var that = this;
 		that.$element = elm;
 		that.options = options;
-		/*
-		 * everOpen
-		 * 记录是否打开过窗口
-		 * 未打开过时 iScroll 获取的高度可能为0
-		 * 所以需要监控 open.modal.amui 事件刷新 iScroll
-		 * */
-		//		that.everOpen = false;
 
 		// 初始化
 		that._ready();
