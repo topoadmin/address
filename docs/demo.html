@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Language" content="zh-CN" />
+		<meta charset="utf-8">
+		<title>地区选择</title>
+		<meta name="Author" content="topoadmin" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+		<link rel="stylesheet" type="text/css" href="../dist/amazeui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../dist/amazeui.address.min.css" />
+	</head>
+
+	<body>
+		<form class="am-form am-padding-sm" id="address1-form">
+			<span>自定义输出位置:</span>
+			<fieldset class="am-form-set">
+				<input type="text" name="prov" readonly>
+				<input type="text" name="city" readonly>
+				<input type="text" name="district" readonly>
+			</fieldset>
+			<button type="button" id="address1" class="am-btn am-btn-block am-margin-bottom-sm">
+				<i class="am-icon am-icon-home"></i> 选择地址
+			</button>
+		</form>
+		<form class="am-form am-padding-sm">
+			<span>带底部</span>
+			<div class="am-form-group am-input-group" id="address2">
+				<span class="am-input-group-label">
+					<i class="am-icon am-icon-home"></i>
+					<span class="am-padding-horizontal-xs">地址2</span>
+				</span>
+				<input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="广东省清远市阳山县">
+			</div>
+		</form>
+
+		<form class="am-form am-padding-sm">
+			<span id="address3-span"></span>
+			<div class="am-form-group am-input-group" id="address3" data-am-address="{prov:'上海',scrollToCenter:true}">
+				<span class="am-input-group-label">
+						<i class="am-icon am-icon-home"></i>
+						<span class="am-padding-horizontal-xs">地址3</span>
+				</span>
+				<input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="">
+			</div>
+		</form>
+
+		<form class="am-form am-padding-sm">
+			<span>可配置的级联（开发中....）</span>
+			<div class="am-form-group am-input-group" id="address4">
+				<span class="am-input-group-label">
+					<i class="am-icon am-icon-home"></i>
+					<span class="am-padding-horizontal-xs">地址4</span>
+				</span>
+				<input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="">
+			</div>
+		</form>
+
+		<script src="../dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../dist/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../dist/iscroll.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="../dist/address.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				//	自定义输出
+				var address1 = $("#address1").address({
+					customOutput: true,
+					selectEnd: function(json) {
+						if(address1.options.customOutput) {
+							for(var key in json) {
+								$("#address1-form").find("input[name='" + key + "']").val(json[key]);
+							}
+							address1.modal("close");
+						}
+					}
+				});
+
+				//	带底部的
+				$("#address2").address({
+					prov: "广东省",
+					city: "清远市",
+					district: "阳山县",
+					scrollToCenter: true,
+					footer: true,
+					selectEnd: function(json) {
+						//console.log(json);
+					}
+				});
+
+				// 好像没什么用
+				$("#address3-span").html("这个 popup 组件的 id 是=【" + $("#address3").data("address-popup") + "】,可通过id获取 popup 对象");
+
+			});
+		</script>
+	</body>
+
+</html>
