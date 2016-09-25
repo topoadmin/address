@@ -13,12 +13,18 @@
 		<meta http-equiv="Cache-Control" content="no-siteapp" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 		<link rel="stylesheet" type="text/css" href="../dist/amazeui.min.css" />
-		<link rel="stylesheet" type="text/css" href="../dist/amazeui.address.min.css" />
+		<link rel="stylesheet" type="text/css" href="../dist/amazeui.address.css" />
+		<style type="text/css">
+			form>h1 {
+				color: #D83832;
+				font-size: 20px;
+			}
+		</style>
 	</head>
 
 	<body>
 		<form class="am-form am-padding-sm" id="address1-form">
-			<span>自定义输出位置:</span>
+			<h1>自定义输出位置:</h1>
 			<fieldset class="am-form-set">
 				<input type="text" name="prov" readonly>
 				<input type="text" name="city" readonly>
@@ -29,7 +35,7 @@
 			</button>
 		</form>
 		<form class="am-form am-padding-sm">
-			<span>带底部</span>
+			<h1>带底部</h1>
 			<div class="am-form-group am-input-group" id="address2">
 				<span class="am-input-group-label">
 					<i class="am-icon am-icon-home"></i>
@@ -38,9 +44,9 @@
 				<input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="广东省清远市阳山县">
 			</div>
 		</form>
-		
+
 		<form class="am-form am-padding-sm">
-			<span>可配置的级联 (省市)</span>
+			<h1>可配置的级联 (省市)</h1>
 			<div class="am-form-group am-input-group" id="address3">
 				<span class="am-input-group-label">
 					<i class="am-icon am-icon-home"></i>
@@ -49,9 +55,9 @@
 				<input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="">
 			</div>
 		</form>
-		
+
 		<form class="am-form am-padding-sm">
-			<span>可配置的级联 (省)</span>
+			<h1>可配置的级联 (省)</h1>
 			<div class="am-form-group am-input-group" id="address4">
 				<span class="am-input-group-label">
 					<i class="am-icon am-icon-home"></i>
@@ -60,9 +66,9 @@
 				<input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="">
 			</div>
 		</form>
-		
+
 		<form class="am-form am-padding-sm">
-			<span>HTML 标签 data 标记绑定组件</span>
+			<h1>HTML 标签 data 标记绑定组件</h1>
 			<div class="am-form-group am-input-group" id="address5" data-am-address="{prov:'上海',scrollToCenter:true}">
 				<span class="am-input-group-label">
 					<i class="am-icon am-icon-home"></i>
@@ -71,12 +77,12 @@
 				<input readonly type="text" name="nickname" class="am-form-field am-radius" placeholder="请选择地址" required="" value="">
 			</div>
 		</form>
-		
+
 		<script src="../dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../dist/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../dist/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../dist/address.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script type="text/javascript">
 			$(function() {
 				//	自定义输出
@@ -87,10 +93,15 @@
 							for(var key in json) {
 								$("#address1-form").find("input[name='" + key + "']").val(json[key]);
 							}
-							address1.$popup.modal("close");
 						}
 					}
 				});
+				
+				$("#address1").on("provTap",function(event,activeli){
+					console.log(activeli.text());
+				}).on("cityTap",function(event,activeli){
+					console.log(activeli.text());
+				})
 				
 				//	带底部的
 				$("#address2").address({
@@ -111,14 +122,14 @@
 					scrollToCenter: true,
 					selectNumber: 2,
 				});
-
+				
 				//	配置级联层数
 				$("#address4").address({
 					prov: "海南省",
 					scrollToCenter: true,
 					selectNumber: 1,
 				});
-				
+
 			});
 		</script>
 	</body>

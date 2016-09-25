@@ -5,6 +5,7 @@
 Amaze UI 中国地区级联组件 
 
 - [使用示例](http://topoadmin.github.io/address/docs/demo.html)
+- [API文档](http://topoadmin.github.io/address/docs/api.md)
 
 **使用说明：**
 1. 获取 Amaze UI Address
