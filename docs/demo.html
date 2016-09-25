@@ -86,7 +86,7 @@
 		<script type="text/javascript">
 			$(function() {
 				//	自定义输出
-				var address1 = $("#address1").address({
+				$("#address1").address({
 					customOutput: true,
 					selectEnd: function(json) {
 						if(address1.options.customOutput) {
@@ -95,9 +95,7 @@
 							}
 						}
 					}
-				});
-				
-				$("#address1").on("provTap",function(event,activeli){
+				}).on("provTap",function(event,activeli){
 					console.log(activeli.text());
 				}).on("cityTap",function(event,activeli){
 					console.log(activeli.text());

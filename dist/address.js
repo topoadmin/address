@@ -331,7 +331,8 @@
 			customOutput: false,
 			selectEnd: false,
 		}, options);
-		return new address(this, opt);
+		new address(this, opt);
+		return this;
 	}
 
 	$.AMUI.ready(function(doc) {
