@@ -342,5 +342,6 @@
 			$this.address(options);
 		});
 	});
-
+	
+	return $;
 }));
