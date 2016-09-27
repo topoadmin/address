@@ -12,7 +12,7 @@
  * @param scrollToCenter	Boolean 	true:已选位置滚动到中央 ,默认为顶部
  * @param autoOpen			Boolean 	自动打开
  * @param customOutput		Function	自定义选择完毕输出，不执行内部填充函数
- * @param selectEnd			Function 	选择完毕回调事件 return {prov,city,district}
+ * @param selectEnd			Function 	选择完毕回调事件 return {prov,city,district},address
  * ------------------
  * @version 1.0.0
  */
@@ -38,51 +38,51 @@
 
 	// 构造函数
 	function address(elm, options) {
-		var that = this;
-		that.$element = elm;
-		that.options = options;
+		var self = this;
+		self.$element = elm;
+		self.options = options;
 
 		// 初始化
-		that._ready();
+		self._ready();
 
 		// 带底部参数
-		if(that.options.footer) {
-			var $cancelBtn = that.$popup.find('.am-address-cancel');
-			var $confirmBtn = that.$popup.find('.am-address-confirm');
+		if(self.options.footer) {
+			var $cancelBtn = self.$popup.find('.am-address-cancel');
+			var $confirmBtn = self.$popup.find('.am-address-confirm');
 			$confirmBtn.on('click', function() {
-				that._selectEnd();
+				self._selectEnd();
 				return false;
 			});
 			$cancelBtn.on('click', function() {
-				that.$popup.modal("close");
+				self.$popup.modal("close");
 				return false;
 			});
 		}
 
 		// 窗口被打开
-		that.$popup.on('open.modal.amui', function() {
-			that._readyProv();
+		self.$popup.on('open.modal.amui', function() {
+			self._readyProv();
 		});
 		
 		// 窗口关闭
-		that.$popup.on('close.modal.amui', function() {
-			var selectProv = that.$prov.find("li.am-active").text();
-			if(selectProv != that.options.prov){
-				that.$prov.find("li:contains("+that.options.prov+")").addClass("am-active").siblings().removeClass("am-active");
+		self.$popup.on('close.modal.amui', function() {
+			var selectProv = self.$prov.find("li.am-active").text();
+			if(selectProv != self.options.prov){
+				self.$prov.find("li:contains("+self.options.prov+")").addClass("am-active").siblings().removeClass("am-active");
 			}
 		});
 
 		// 是否自动打开
-		if(that.options.autoOpen) {
-			that.$popup.modal("open");
+		if(self.options.autoOpen) {
+			self.$popup.modal("open");
 		}
 
-		that.$element.on("click", function() {
-			that.$popup.modal("open");
+		self.$element.on("click", function() {
+			self.$popup.modal("open");
 		});
 
 		// 给 element 对象绑定选择窗口的id
-		that.$element.data("address-popup", that.$popup.attr("id"));
+		self.$element.data("address-popup", self.$popup.attr("id"));
 	}
 
 	// 渲染选项列表
@@ -111,16 +111,16 @@
 
 	// 渲染选择窗口
 	address.prototype._ready = function() {
-		var that = this;
+		var self = this;
 		var html = [];
 		html.push('<div class="am-popup am-address-popup" id="' + Math.ceil(Math.random() * (new Date).getTime()) + '">');
 		html.push('<div class="am-popup-inner">');
 		html.push('<div class="am-popup-hd">');
-		html.push('<h4 class="am-popup-title">' + that.options.title + '</h4>');
+		html.push('<h4 class="am-popup-title">' + self.options.title + '</h4>');
 		html.push('<span data-am-modal-close class="am-close">&times;</span>');
 		html.push('</div>');
 		html.push('<div class="am-popup-bd">');
-		if(that.options.footer) {
+		if(self.options.footer) {
 			html.push('<div class="am-address-list am-address-list-footer">');
 		} else {
 			html.push('<div class="am-address-list">');
@@ -130,7 +130,7 @@
 		html.push('<div class="am-u-sm-4 am-address-district"><ul class="am-list am-list-static"></div>');
 		html.push('</div>');
 
-		if(that.options.footer) {
+		if(self.options.footer) {
 			html.push('<div class="am-modal-footer am-address-footer">');
 			html.push('<span class="am-modal-btn am-address-cancel">取消</span>');
 			html.push('<span class="am-modal-btn am-address-confirm">确定</span>');
@@ -139,152 +139,152 @@
 		html.push('</div>');
 		html.push('</div>');
 		html.push('</div>');
-		that.$popup = $(html.join('')).appendTo('body');
+		self.$popup = $(html.join('')).appendTo('body');
 
-		that.$prov = that.$popup.find('div.am-address-prov');
-		that.$city = that.$popup.find('div.am-address-city');
-		that.$district = that.$popup.find('div.am-address-district');
+		self.$prov = self.$popup.find('div.am-address-prov');
+		self.$city = self.$popup.find('div.am-address-city');
+		self.$district = self.$popup.find('div.am-address-district');
 
 		// 初始化数据
-		that._readyProv("create");
+		self._readyProv("create");
 
 		// 判断是否需要添加市级或县级栏
-		if(that.options.selectNumber == 1) {
-			that.$popup.find("div.am-address-list>div").removeClass("am-u-sm-4").addClass("am-u-sm-12");
+		if(self.options.selectNumber == 1) {
+			self.$popup.find("div.am-address-list>div").removeClass("am-u-sm-4").addClass("am-u-sm-12");
 		} else {
-			that._readyCity("create");
+			self._readyCity("create");
 		}
-		if(that.options.selectNumber == 2) {
-			that.$popup.find("div.am-address-list>div").removeClass("am-u-sm-4").addClass("am-u-sm-6");
+		if(self.options.selectNumber == 2) {
+			self.$popup.find("div.am-address-list>div").removeClass("am-u-sm-4").addClass("am-u-sm-6");
 		} else {
-			that._readyDistrict("create");
+			self._readyDistrict("create");
 		}
 	}
 
-	// 函数 _readyXXX 的参数 methods="create" 表示新建 否则负责刷新 IScroll 
+	// 函数 _readyxxx 的参数 methods="create" 表示新建 否则负责刷新 IScroll 
 	// {渲染,刷新} 省级数据
 	address.prototype._readyProv = function(methods) {
-		var that = this;
+		var self = this;
 		if(methods == "create") {
-			var prov = address._readyList(addressJson, that.options.prov);
-			that.$prov.children("ul").html(prov.list).data("address-active", prov.index);
+			var prov = address._readyList(addressJson, self.options.prov);
+			self.$prov.children("ul").html(prov.list).data("address-active", prov.index);
 			if(!prov.index) {
-				that.$prov.find("li:eq(0)").addClass("am-active").siblings("li").removeClass("am-active");
+				self.$prov.find("li:eq(0)").addClass("am-active").siblings("li").removeClass("am-active");
 			}
 
-			that.provIscroll = new iScroll(that.$prov[0], {
+			self.provIscroll = new iScroll(self.$prov[0], {
 				tap: "addressTap",
 				mouseWheel: true
 			});
 
 			// 点击事件
-			that.$prov.on("addressTap", "li", function() {
+			self.$prov.on("addressTap", "li", function() {
 				var $this = $(this);
 				if($this.hasClass("am-active")){
 					return false;
 				}
 				$this.addClass("am-active").siblings("li").removeClass("am-active");
-				if(that.options.selectNumber != 1) {
-					that._readyCity(null, "tap");
+				if(self.options.selectNumber != 1) {
+					self._readyCity(null, "tap");
 				} else {
-					that._selectEnd();
+					self._selectEnd();
 				}
-				that.$element.trigger("provTap",[$this]);
+				self.$element.trigger("provTap",[$this]);
 			});
 		} else {
-			if(that.options.selectNumber != 1) {
-				that._readyCity();
+			if(self.options.selectNumber != 1) {
+				self._readyCity();
 			}
-			that.provIscroll.refresh();
-			that.provIscroll.scrollToElement(that.$prov.find("li.am-active")[0], null, null, that.options.scrollToCenter);
+			self.provIscroll.refresh();
+			self.provIscroll.scrollToElement(self.$prov.find("li.am-active")[0], null, null, self.options.scrollToCenter);
 		}
 	}
 
 	// {渲染,刷新} 市级数据
 	address.prototype._readyCity = function(methods, onEvent) {
-		var that = this;
+		var self = this;
 		if(methods == "create") {
-			that.cityIscroll = new iScroll(that.$city[0], {
+			self.cityIscroll = new iScroll(self.$city[0], {
 				tap: "addressTap",
 				mouseWheel: true
 			});
-			that.$city.on("addressTap", "li", function() {
+			self.$city.on("addressTap", "li", function() {
 				var $this = $(this);
 				if($this.hasClass("am-active")){
 					return false;
 				}
 				$this.addClass("am-active").siblings("li").removeClass("am-active");
-				if(that.options.selectNumber != 2) {
-					that._readyDistrict(null, "tap");
+				if(self.options.selectNumber != 2) {
+					self._readyDistrict(null, "tap");
 				} else {
-					that._selectEnd();
+					self._selectEnd();
 				}
-				that.$element.trigger("cityTap",[$this]);
+				self.$element.trigger("cityTap",[$this]);
 			});
 		} else {
-			var provIndex = that.$prov.find(".am-active").index();
-			var city = address._readyList(addressJson[provIndex].city, that.options.city);
-			that.$city.children("ul").html(city.list).data("address-active", city.index);
+			var provIndex = self.$prov.find(".am-active").index();
+			var city = address._readyList(addressJson[provIndex].city, self.options.city);
+			self.$city.children("ul").html(city.list).data("address-active", city.index);
 			if(!city.index) { // 没有默认选中项
-				that.$city.find("li:eq(0)").addClass("am-active").siblings("li").removeClass("am-active");
+				self.$city.find("li:eq(0)").addClass("am-active").siblings("li").removeClass("am-active");
 			}
 			// 触发省级 tap 事件时，如果市级只要一个并且是省市级联时，触发选择完毕函数
-			if(onEvent === "tap" && addressJson[provIndex].city.length <= 1 && that.options.selectNumber == 2) {
-				that._selectEnd();
+			if(onEvent === "tap" && addressJson[provIndex].city.length <= 1 && self.options.selectNumber == 2) {
+				self._selectEnd();
 			}
 
-			that.cityIscroll.refresh();
-			that.cityIscroll.scrollToElement(that.$city.find("li.am-active")[0], null, null, that.options.scrollToCenter);
+			self.cityIscroll.refresh();
+			self.cityIscroll.scrollToElement(self.$city.find("li.am-active")[0], null, null, self.options.scrollToCenter);
 
-			if(that.options.selectNumber != 2) {
-				that._readyDistrict();
+			if(self.options.selectNumber != 2) {
+				self._readyDistrict();
 			}
 		}
 	}
 
 	// {渲染,刷新} 县级 数据
 	address.prototype._readyDistrict = function(methods, onEvent) {
-		var that = this;
+		var self = this;
 		if(methods == "create") {
-			that.districtIscroll = new iScroll(that.$district[0], {
+			self.districtIscroll = new iScroll(self.$district[0], {
 				tap: "addressTap",
 				mouseWheel: true
 			});
 
 			// 点击事件
-			that.$district.on("addressTap", "li", function() {
+			self.$district.on("addressTap", "li", function() {
 				var $this = $(this);
 				$this.addClass("am-active").siblings("li").removeClass("am-active");
-				that._selectEnd();
+				self._selectEnd();
 			});
 		} else {
-			var provIndex = that.$prov.find(".am-active").index();
-			var cityIndex = that.$city.find(".am-active").index();
+			var provIndex = self.$prov.find(".am-active").index();
+			var cityIndex = self.$city.find(".am-active").index();
 			var districtJson = addressJson[provIndex].city[cityIndex].district;
 			if(districtJson.length <= 0) { // 如果县级数据不存在，设置为空
-				that.$district.children("ul").html("");
+				self.$district.children("ul").html("");
 				if(onEvent == "tap") {
-					that._selectEnd();
+					self._selectEnd();
 				}
 				return;
 			}
 
-			var district = address._readyList(districtJson, that.options.district);
+			var district = address._readyList(districtJson, self.options.district);
 
-			that.$district.children("ul").html(district.list).data("address-active", district.index);
+			self.$district.children("ul").html(district.list).data("address-active", district.index);
 			if(!district.index) {
-				that.$district.find("li:eq(0)").addClass("am-active").siblings("li").removeClass("am-active");
+				self.$district.find("li:eq(0)").addClass("am-active").siblings("li").removeClass("am-active");
 			}
-			that.districtIscroll.refresh();
-			that.districtIscroll.scrollToElement(that.$district.find("li.am-active")[0], null, null, that.options.scrollToCenter);
+			self.districtIscroll.refresh();
+			self.districtIscroll.scrollToElement(self.$district.find("li.am-active")[0], null, null, self.options.scrollToCenter);
 		}
 	}
 
 	// 选择完毕
 	address.prototype._selectEnd = function() {
-		var that = this;
+		var self = this;
 		// 获取已选省级数据
-		var provIndex = that.$prov.find("li.am-active").index();
+		var provIndex = self.$prov.find("li.am-active").index();
 		var provJson = addressJson[provIndex];
 
 		var sJson = {
@@ -293,28 +293,28 @@
 			district: ""
 		}
 
-		if(that.options.selectNumber != 1) { // selectNumber = 1 表示只选省级 
-			var cityIndex = that.$city.find("li.am-active").index();
+		if(self.options.selectNumber != 1) { // selectNumber = 1 表示只选省级 
+			var cityIndex = self.$city.find("li.am-active").index();
 			var cityJson = addressJson[provIndex].city[cityIndex];
 			sJson.city = cityJson.name;
 			// 判断是否有 县区 级数据
-			if(cityJson.district.length && that.options.selectNumber != 2) { // selectNumber = 2 表示只选省市级
-				var districtIndex = that.$district.find("li.am-active").index();
+			if(cityJson.district.length && self.options.selectNumber != 2) { // selectNumber = 2 表示只选省市级
+				var districtIndex = self.$district.find("li.am-active").index();
 				var districtJson = addressJson[provIndex].city[cityIndex].district[districtIndex];
 				sJson.district = districtJson.name;
 			}
 		}
 
-		that.options = $.extend(true, that.options, sJson); // 合并参数,下次打开选择窗口时，需读取 options 数据进行定位
+		self.options = $.extend(true, self.options, sJson); // 合并参数,下次打开选择窗口时，需读取 options 数据进行定位
 
 		// 自动填充
-		if(!that.options.customOutput) {
-			that.$element.find("input").val(sJson.prov + sJson.city + sJson.district);
+		if(!self.options.customOutput) {
+			self.$element.find("input").val(sJson.prov + sJson.city + sJson.district);
 		}
 
 		// 选取完毕回调
-		if($.isFunction(that.options.selectEnd)) {
-			that.options.selectEnd(sJson);
+		if($.isFunction(self.options.selectEnd)) {
+			self.options.selectEnd(sJson,self);
 		}
 		this.$popup.modal("close");
 	}

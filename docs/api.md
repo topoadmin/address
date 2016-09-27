@@ -13,7 +13,7 @@ selectNumber | Int | `0` | 配置可选项(2只选省市，1只选省)
 scrollToCenter | Boolean |  `false` | 打开选择窗口时已选项是否滚动到中央
 autoOpen | Boolean |  `false` | 是否自动打开选择窗口
 customOutput | Boolean |  `false` | 自定义选择完毕输出，不执行内部填充函数
-selectEnd | Function|  `false` | 选择完毕回调事件 `return {prov,city,district,zip}`
+selectEnd | Function|  `false` | 选择完毕回调事件 `return {prov,city,district,zip},address`
 ## 事件
 
 
