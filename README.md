@@ -1,4 +1,4 @@
-# Amaze UI Address
+# Amaze UI address
 ---
 
 ### address
@@ -8,7 +8,7 @@ Amaze UI 中国地区级联组件
 - [API文档](http://github.com/topoadmin/address/blob/master/docs/api.md)
 
 **使用说明：**
-1. 获取 Amaze UI Address
+1. 获取 Amaze UI address
 
   - [直接下载](https://github.com/topoadmin/address/archive/master.zip)
 
@@ -17,8 +17,8 @@ Amaze UI 中国地区级联组件
   Amaze UI address 依赖 Amaze UI 样式。
 
   ```html
-  <link rel="stylesheet" href="path/to/amazeui.min.css"/>
-  <link rel="stylesheet" href="path/to/amazeui.address.min.css"/>
+  <link rel="stylesheet" href="dist/amazeui.min.css"/>
+  <link rel="stylesheet" href="dist/amazeui.address.min.css"/>
   ```
 
 3. 引入 address 插件（`dist` 目录下的 JS）：
