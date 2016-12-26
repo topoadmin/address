@@ -1,5 +1,8 @@
 # Amaze UI address
 ---
+**更新内容：**
+1. 修复丢失省份
+2. 修复移动端滑动失效BUG
 
 ### address
 Amaze UI 中国地区级联组件 
